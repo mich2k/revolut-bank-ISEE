@@ -64,7 +64,7 @@ for k,v in dic.items():
                 if(row[1].split(' ')[0] == back_date and row[12] != '' and dic.get(k)[1]==0):
                     tmp=[float(row[12]),1]
                     dic[k]=tmp
-                    print(f"on {k} i gave {tmp}")
+                    #print(f"on {k} i gave {tmp}")
                     continue
             #if i arrive here means there was not the date in the csv file, so i have to lookup in the dict
             if(dic.get(k)[1]==0):
@@ -81,7 +81,7 @@ for k,v in dic.items():
 # proceeding with avg calc..
 
 year_sum=0
-pprint.pprint(dic)
+#pprint.pprint(dic)
 
 for k,v in dic.items():
     curr=v[0]/v[1]
