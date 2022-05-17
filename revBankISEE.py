@@ -35,13 +35,13 @@ with open('dest.csv') as csv_file:  # hardcoded filename
         if(lc != 0):
             if(row[12] != ''):
                # dic[str(row[1])]+=float(row[12])
-                if(dic.get(row[1]) is None):
-                    dic[row[1]] = [round(float(row[12]),2), 1]
+                if(dic.get(row[1].split(' ')[0]) is None):
+                    dic[row[1].split(' ')[0]] = [round(float(row[12]),2), 1]
                 else:
-                    tmp=dic.get(row[1])
+                    tmp=dic.get(row[1].split(' ')[0])
                     tmp[0] = tmp[0] + float(row[12])
                     tmp[1] = tmp[1] +1
-                    dic[row[1]]=tmp
+                    dic[row[1].split(' ')[0]]=tmp
         lc+=1
 #pprint.pprint(dic)     
 # rounds dict
@@ -61,15 +61,17 @@ for k,v in dic.items():
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 back_date=str(datetime.fromisoformat(k)-timedelta(days=1)).split(' ')[0]
-                if(row[1] == back_date and row[12] != '' and dic.get(k)[0]==0):
+                if(row[1].split(' ')[0] == back_date and row[12] != '' and dic.get(k)[1]==0):
                     tmp=[float(row[12]),1]
                     dic[k]=tmp
+                    print(f"on {k} i gave {tmp}")
                     continue
             #if i arrive here means there was not the date in the csv file, so i have to lookup in the dict
-            back_date=str(datetime.fromisoformat(k)-timedelta(days=1)).split(' ')[0]
-            tmp=dic.get(back_date).copy()   # NOT by reference
-            tmp[1]=1
-            dic[k]=tmp
+            if(dic.get(k)[1]==0):
+                back_date=str(datetime.fromisoformat(k)-timedelta(days=1)).split(' ')[0]
+                tmp=dic.get(back_date).copy()   # NOT by reference
+                tmp[1]=1
+                dic[k]=tmp
 
 # only at this point the dic has full and valid data
 
@@ -79,7 +81,7 @@ for k,v in dic.items():
 # proceeding with avg calc..
 
 year_sum=0
-#pprint.pprint(dic)
+pprint.pprint(dic)
 
 for k,v in dic.items():
     curr=v[0]/v[1]
