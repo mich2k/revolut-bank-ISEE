@@ -134,4 +134,4 @@ dmypy.json
 *.odc
 *.xls
 
-.csv#
+*.csv#
