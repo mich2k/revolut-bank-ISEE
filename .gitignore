@@ -133,3 +133,5 @@ dmypy.json
 *.csv
 *.odc
 *.xls
+
+.csv#
