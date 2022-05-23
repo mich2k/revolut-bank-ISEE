@@ -10,6 +10,8 @@ Contiene tutte le bad practices possibili, però l' <a href="https://www.agenzia
   ./revBankISEE.py
 </code>
 
+<br>
+
 Lo statement deve essere in .csv e nominato statement.csv (hard coded come ci piace) e trovarsi nella stessa cartella di questo script.
 
 Richiesto python 3.X
