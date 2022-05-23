@@ -49,19 +49,21 @@ with open(filename) as csv_file:
 # adds data to missing days from calc statement in order to fill missing gaps
 i=0
 with open(filename) as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
     for k,v in dic.items():
         if(i==0):
             i+=1
             continue
         if(v[1] == 0):
-            csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 back_date=str(datetime.fromisoformat(k)-timedelta(days=1)).split(' ')[0]
                 if(row[1].split(' ')[0] == back_date and row[12] != '' and dic.get(k)[1]==0):
                     tmp=[float(row[12]),1]
                     dic[k]=tmp
+                    csv_file.close()
                     continue
             #Missing in csv file, lookup in the dict..
+            csv_file.close()
             if(dic.get(k)[1]==0):
                 back_date=str(datetime.fromisoformat(k)-timedelta(days=1)).split(' ')[0]
                 tmp=dic.get(back_date).copy()   # NOT by reference
