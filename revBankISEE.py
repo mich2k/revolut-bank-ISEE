@@ -8,7 +8,7 @@ dic={}
 
 # filename & year
 
-# whole calendar in the dict (full automatic) !
+# import whole given calendar in the dic
 
 year=2020
 
@@ -21,7 +21,7 @@ while curr_date != end_date:
 
 # import data
 #pprint.pprint(dic) 
-with open('dest.csv') as csv_file:  # hardcoded filename
+with open('statement.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     back_date =''
     curr_date=''
@@ -31,10 +31,9 @@ with open('dest.csv') as csv_file:  # hardcoded filename
 
 
 
-    for row in csv_reader:  # begin reading .csv rows
+    for row in csv_reader:
         if(lc != 0):
             if(row[12] != ''):
-               # dic[str(row[1])]+=float(row[12])
                 if(dic.get(row[1].split(' ')[0]) is None):
                     dic[row[1].split(' ')[0]] = [round(float(row[12]),2), 1]
                 else:
@@ -43,14 +42,10 @@ with open('dest.csv') as csv_file:  # hardcoded filename
                     tmp[1] = tmp[1] +1
                     dic[row[1].split(' ')[0]]=tmp
         lc+=1
-#pprint.pprint(dic)     
-# rounds dict
+        
+# rounds dict to 2 floating digits
 
-#dic = {key : [round(dic[key][0], 2), dic[key][1]] for key in dic}   # before time delta
-
-#pprint.pprint(dic) 
-
-# adds data to missing days from calc statement
+# adds data to missing days from calc statement in order to fill missing gaps
 i=0
 for k,v in dic.items():
     if(i==0):
@@ -64,9 +59,8 @@ for k,v in dic.items():
                 if(row[1].split(' ')[0] == back_date and row[12] != '' and dic.get(k)[1]==0):
                     tmp=[float(row[12]),1]
                     dic[k]=tmp
-                    #print(f"on {k} i gave {tmp}")
                     continue
-            #if i arrive here means there was not the date in the csv file, so i have to lookup in the dict
+            #Missing in csv file, lookup in the dict..
             if(dic.get(k)[1]==0):
                 back_date=str(datetime.fromisoformat(k)-timedelta(days=1)).split(' ')[0]
                 tmp=dic.get(back_date).copy()   # NOT by reference
@@ -76,12 +70,11 @@ for k,v in dic.items():
 # only at this point the dic has full and valid data
 
 #pprint.pprint(dic)  # remove this comment if you want to display the full dictionary, strongly 
-                # suggested to double check with your official statement
+                        # suggested to double check with your official statement
 
-# proceeding with avg calc..
+# Avg calc phase...
 
 year_sum=0
-#pprint.pprint(dic)
 
 for k,v in dic.items():
     curr=v[0]/v[1]
