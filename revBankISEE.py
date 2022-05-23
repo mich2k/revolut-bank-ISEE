@@ -88,4 +88,4 @@ if(year%4==0 and year%100!=0 or year%400==0):
 else:
     year_days=365
 
-print(f"L'isee e' '{round(year_sum/year_days,2)}'.")
+print(f"La giacenza media e' '{round(year_sum/year_days,2)}'.")
