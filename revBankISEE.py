@@ -6,11 +6,14 @@ from datetime import date, timedelta, datetime
 dic={} 
 
 
-# filename & year
+# filename & year, you can change these 2 vars.
+
+filename='statement.csv'
+year=2020       # it will lookup for correct calendar 
+
 
 # import whole given calendar in the dic
 
-year=2020
 
 init_date=date(year,1,1)
 end_date=date(year,12,31)
@@ -21,13 +24,11 @@ while curr_date != end_date:
 
 # import data
 #pprint.pprint(dic) 
-with open('statement.csv') as csv_file:
+with open(filename) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     back_date =''
     curr_date=''
     lc=0
-    inner_splitter=0
-    inner_additioner=0.0
 
 
 
@@ -52,7 +53,7 @@ for k,v in dic.items():
         i+=1
         continue
     if(v[1] == 0):
-        with open('dest.csv') as csv_file:  # hardcoded filename
+        with open(filename) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 back_date=str(datetime.fromisoformat(k)-timedelta(days=1)).split(' ')[0]
