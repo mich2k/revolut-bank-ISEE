@@ -48,12 +48,12 @@ with open(filename) as csv_file:
 
 # adds data to missing days from calc statement in order to fill missing gaps
 i=0
-for k,v in dic.items():
-    if(i==0):
-        i+=1
-        continue
-    if(v[1] == 0):
-        with open(filename) as csv_file:
+with open(filename) as csv_file:
+    for k,v in dic.items():
+        if(i==0):
+            i+=1
+            continue
+        if(v[1] == 0):
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 back_date=str(datetime.fromisoformat(k)-timedelta(days=1)).split(' ')[0]
